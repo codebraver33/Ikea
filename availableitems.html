@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Items</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/pngaaa.com-714543.png" alt="Walmart Logo">
+        </div>
+        <button class="toggle-btn" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="availableitems.html">Items</a></li>
+            <li><a href="Customer.html">Customers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="cart-icon">
+                <a href="cart.html"><i class="fa fa-shopping-cart"></i>
+                <span id="cart-count">0</span></a>
+            </li>
+        </ul>
+    </nav>
+    <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search items...">
+        <button id="search-btn" onclick="searchItems()">Search</button>
+    </div>
+    <div id="items-section"></div>
+    <div class="chat-icon" onclick="toggleChat()">
+        <i class="fa fa-comments"></i>
+        <span class="tooltip">Enter name to get ingredients</span>
+    </div>
+    <div class="chat-container" id="chat-container">
+        <div class="chat-header">
+            <h3>Ask about Ingredients</h3>
+            <button class="close-btn" onclick="toggleChat()">X</button>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <!-- Chat messages will appear here -->
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="Ask about ingredients...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    <footer class="special-footer">
+        <div class="footer-container">
+            <div class="footer-section company-info">
+                <h3>Ikea Restaurant</h3>
+                <p>Leading the way in affordable, quality products for everyone.</p>
+                <p>Email: support@IKEA.com</p>
+                <p>Phone: +1 800-123-4567</p>
+            </div>
+            <div class="footer-section quick-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="availableitems.html">Shop Now</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section customer-support">
+                <h4>Customer Support</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Order Tracking</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social-media">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/IKEA/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ikeausa?igsh=MWV5azh1YjBucndkNA=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/IKEA"><i class="fab fa-twitter"></i></a>
+                    <a href="https://twitter.com/IKEAUSA"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ikea Restaurant. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // Food API for searching food items
+        const apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
+        // Set the default value of the search bar to "bread" when the page loads
+        window.onload = function() {
+            document.getElementById("search-bar").value = "bread";
+            searchItems();  // Trigger the search when the page loads
+            updateCartCount();
+        };
+        // Function to fetch and display items based on the search term from the API
+        function searchItems() {
+            const query = document.getElementById("search-bar").value.trim();
+            const itemsSection = document.getElementById("items-section");
+            itemsSection.innerHTML = "";  // Clear previous results
+            if (!query) {
+                itemsSection.innerHTML = "<p>Please enter a search term.</p>";
+                return;
+            }
+            // API call to fetch data from the external API
+            fetch(`${apiUrl}${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.meals) {
+                        data.meals.forEach(item => {
+                            const itemDiv = document.createElement("div");
+                            itemDiv.classList.add("item");
+                            // Generating a random price for each item
+                            const price = (Math.random() * 20 + 5).toFixed(2);
+                            itemDiv.innerHTML = `
+                                <img src="${item.strMealThumb}" alt="${item.strMeal}">
+                                <h3>${item.strMeal}</h3>
+                                <p>Price: $${price}</p>
+                                <button onclick="addToCart('${item.idMeal}', '${item.strMeal}', '${item.strMealThumb}', ${price})">Add to Cart</button>
+                            `;
+                            itemsSection.appendChild(itemDiv);
+                        });
+                    } else {
+                        itemsSection.innerHTML = "<p>No items found for this search.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    itemsSection.innerHTML = "<p>Error fetching data. Please try again later.</p>";
+                });
+        }
+        // Function to add item to cart
+        function addToCart(id, name, image, price) {
+            const cartItem = { id, name, image, price };
+            // Retrieve the cart from localStorage or create a new empty cart
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            // Add the new item to the cart
+            cart.push(cartItem);
+            // Store the updated cart back to localStorage
+            localStorage.setItem("cart", JSON.stringify(cart));
+            // Update the cart count in localStorage and on the page
+            updateCartCount();
+        }
+        // Function to update the cart count
+        function updateCartCount() {
+            // Get the cart length from localStorage and update the count
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartCount = cart.length;
+            // Update the cart count in the display
+            document.getElementById("cart-count").innerText = cartCount;
+        }
+        // Function to toggle the menu (for mobile view)
+        function toggleMenu() {
+            const navLinks = document.getElementById("nav-links");
+            navLinks.classList.toggle("active");
+        }
+
+        // Function to toggle the chat window
+        function toggleChat() {
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.classList.toggle('active');
+        }
+
+        // Function to send a message to the chatbot
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (message) {
+                displayMessage('You', message);
+                input.value = '';
+                fetchChatbotResponse(message);
+            }
+        }
+
+        // Function to display a message in the chat
+        function displayMessage(sender, message) {
+            const chatBody = document.getElementById('chat-body');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message');
+            messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatBody.appendChild(messageDiv);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        // Function to fetch a response from the MealDB API
+        function fetchChatbotResponse(message) {
+            fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${message}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.meals) {
+                        const ingredients = [];
+                        for (let i = 1; i <= 20; i++) {
+                            const ingredient = data.meals[0][`strIngredient${i}`];
+                            if (ingredient) {
+                                ingredients.push(ingredient);
+                            }
+                        }
+                        displayMessage('Chatbot', `The ingredients for ${message} are: ${ingredients.join(', ')}`);
+                    } else {
+                        displayMessage('Chatbot', `Sorry, I couldn't find any ingredients for ${message}.`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching chatbot response:', error);
+                    displayMessage('Chatbot', 'Sorry, something went wrong. Please try again later.');
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Walmart Supermarket</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar  -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/pngaaa.com-714543.png" alt="Walmart Logo">
+        </div>
+        <button class="toggle-btn" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="availableitems.html">Items</a></li>
+            <li><a href="Customer.html">Customers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="cart-icon">
+                <a href="cart.html"><i class="fa fa-shopping-cart"></i>
+                <span id="cart-count">0</span></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="encouraging-message">
+            <h2>We’re Here for You!</h2>
+            <p>Got questions or need help? Don’t hesitate to reach out! We're always ready to hear from you. Whether you're curious about our products, services, or just want to chat about what we offer, we’re happy to assist! Just fill out the form below and we’ll get back to you as soon as possible. <strong>Let’s get the conversation started!</strong></p>
+            <p><strong>Go ahead, fill in the form, and we’ll make sure to assist you in the best possible way. Go, go, goooooooo! :smile:</strong></p>
+        </div>
+        ...
+        <div class="contact-container">
+            <!-- Form Section and Image Section -->
+            <div class="form-container">
+                <h2>Contact Us</h2>
+                <form id="message-form">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+            
+        </div>
+        </div>
+        <hr>
+        <!-- Visit Our Supermarkets Section -->
+        <div class="visit-us-section">
+            <h3>Visit Our Restaurants</h3>
+            <p>Ikea Restaurants are located across the entire United States, providing you with everything you need in one convenient location. Whether you're looking for groceries, home essentials, or electronics, we're always ready to serve you. Visit us today and experience the best shopping experience around!</p>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="special-footer">
+        <div class="footer-container">
+            <div class="footer-section company-info">
+                <h3>Ikea Restaurant</h3>
+                <p>Leading the way in affordable, quality products for everyone.</p>
+                <p>Email: support@IKEA.com</p>
+                <p>Phone: +1 800-123-4567</p>
+            </div>
+            <div class="footer-section quick-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="availableitems.html">Shop Now</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section customer-support">
+                <h4>Customer Support</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Order Tracking</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social-media">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/IKEA/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ikeausa?igsh=MWV5azh1YjBucndkNA=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/IKEA"><i class="fab fa-twitter"></i></a>
+                    <a href="https://twitter.com/IKEAUSA"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ikea Restaurant. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // Function to handle form submission for messages
+ function handleMessageFormSubmit(event) {
+    event.preventDefault(); // Prevent the form from submitting (reloading the page)
+    // Show an alert thanking the user for their message
+    alert("Thank you for your message! We’ll get back to you soon.");
+    // Clear the form fields
+    document.getElementById('message-form').reset();
+}
+
+// Add event listener to the message form
+document.getElementById('message-form').addEventListener('submit', handleMessageFormSubmit);
+    </script>
+</body>
+</html>

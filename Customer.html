@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walmart Supermarket - Customer Reviews</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Customer Reviews Section */
+        .customer-reviews {
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .customer-reviews h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        /* Reviews Container with Special Style */
+        .reviews-container.special-style {
+            display: flex;
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .post {
+            flex: 0 0 20%;
+            box-sizing: border-box;
+            padding: 10px;
+            transition: transform 0.5s ease-in-out;
+        }
+        .post-image-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .post-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        /* Hover Effect for Images */
+        .post-image:hover {
+            transform: scale(1.05);
+        }
+        /* Animation for sliding images */
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-20%); }
+            40% { transform: translateX(-40%); }
+            60% { transform: translateX(-60%); }
+            80% { transform: translateX(-80%); }
+            100% { transform: translateX(-100%); }
+        }
+        .reviews-container.special-style {
+            animation: slide 20s infinite linear;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/pngaaa.com-714543.png" alt="Walmart Logo">
+        </div>
+        <button class="toggle-btn" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="availableitems.html">Items</a></li>
+            <li><a href="Customer.html">Customers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="cart-icon">
+                <a href="cart.html"><i class="fa fa-shopping-cart"></i>
+                <span id="cart-count">0</span></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Customer Reviews Section -->
+    <section class="customer-reviews">
+        <h2>What People Say</h2>
+        <div class="reviews-container special-style">
+            <div class="post">
+                <div class="post-image-container">
+                    <img src="images/facebook_post (1).png" alt="Facebook Post" class="post-image">
+                </div>
+            </div>
+            <div class="post">
+                <div class="post-image-container">
+                    <img src="images/instagram_post (5).png" alt="Instagram Post" class="post-image">
+                </div>
+            </div>
+            <div class="post">
+                <div class="post-image-container">
+                    <img src="images/TikTok_Post.png" alt="Instagram Post" class="post-image">
+                </div>
+            </div>
+            <div class="post">
+                <div class="post-image-container">
+                    <img src="images/whatsapp_chat.png" alt="TikTok Post" class="post-image">
+                </div>
+            </div>
+            <div class="post">
+                <div class="post-image-container">
+                    <img src="images/instagram_post (4).png" alt="Instagram Post" class="post-image">
+                </div>
+            </div>
+        </div>
+        <!-- Messages Section -->
+        <section class="messages-section">
+            <h3>Customer Messages</h3>
+            <div id="message-container">
+                <!-- Messages will appear here dynamically -->
+            </div>
+        </section>
+        <div class="rating-section">
+            <h3>Rate Our Resturant</h3>
+            <div class="stars" id="stars">
+                <i class="fa fa-star" onclick="rate(1)"></i>
+                <i class="fa fa-star" onclick="rate(2)"></i>
+                <i class="fa fa-star" onclick="rate(3)"></i>
+                <i class="fa fa-star" onclick="rate(4)"></i>
+                <i class="fa fa-star" onclick="rate(5)"></i>
+            </div>
+            <button onclick="submitRating()">Submit Rating</button>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="special-footer">
+        <div class="footer-container">
+            <div class="footer-section company-info">
+                <h3>Ikea Restaurant</h3>
+                <p>Leading the way in affordable, quality products for everyone.</p>
+                <p>Email: support@Ikea.com</p>
+                <p>Phone: +1 800-123-4567</p>
+            </div>
+            <div class="footer-section quick-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="availableitems.html">Shop Now</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section customer-support">
+                <h4>Customer Support</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Order Tracking</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social-media">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/IKEA/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ikeausa?igsh=MWV5azh1YjBucndkNA=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/IKEA"><i class="fab fa-twitter"></i></a>
+                    <a href="https://twitter.com/IKEAUSA"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ikea Restaurant. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

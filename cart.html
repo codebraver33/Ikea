@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart & Delivery</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/pngaaa.com-714543.png" alt="Walmart Logo">
+        </div>
+        <button class="toggle-btn" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="availableitems.html">Items</a></li>
+            <li><a href="Customer.html">Customers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="cart-icon">
+                <a href="cart.html"><i class="fa fa-shopping-cart"></i>
+                <span id="cart-count">0</span></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Cart Section -->
+    <section class="cart-container">
+        <div class="cart-items-container">
+            <h2>Your Cart</h2>
+            <div id="cart-items">
+                <!-- Cart items will be displayed here dynamically -->
+            </div>
+            <div class="total-price" id="total-price">
+                <!-- Total price will be displayed here -->
+            </div>
+            <button class="order-button" onclick="showDeliveryForm()">Order Now</button>
+            <!-- Delivery Form -->
+            <div class="delivery-form" id="delivery-form">
+                <h3>Delivery Information</h3>
+                <form id="delivery-form-content">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="payment-method">Payment Method</label>
+                    <select id="payment-method" name="payment-method" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="credit-card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bank-transfer">Bank Transfer</option>
+                    </select>
+                    <button type="submit">Order Now</button>
+                </form>
+            </div>
+        </div>
+        <div class="weather-container" id="weather-container">
+            <p>Loading weather...</p>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="special-footer">
+        <div class="footer-container">
+            <div class="footer-section company-info">
+                <h3>Ikea Restaurant</h3>
+                <p>Leading the way in affordable, quality products for everyone.</p>
+                <p>Email: support@IKEA.com</p>
+                <p>Phone: +1 800-123-4567</p>
+            </div>
+            <div class="footer-section quick-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="availableitems.html">Shop Now</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section customer-support">
+                <h4>Customer Support</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Order Tracking</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social-media">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/IKEA/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ikeausa?igsh=MWV5azh1YjBucndkNA=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/IKEA"><i class="fab fa-twitter"></i></a>
+                    <a href="https://twitter.com/IKEAUSA"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ikea Restaurant. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <script>
+        // OpenWeatherMap API key
+        const weatherApiKey = "09f1bfdf999b5ea4881df9254e5e43a6"; // Replace with your OpenWeatherMap API key
+
+        // Function to display items in the cart
+        function displayCart() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartItemsSection = document.getElementById("cart-items");
+            const totalPriceElement = document.getElementById("total-price");
+            cartItemsSection.innerHTML = "";  // Clear previous cart items
+            let totalPrice = 0;
+            cart.forEach((item, index) => {
+                const cartItemDiv = document.createElement("div");
+                cartItemDiv.classList.add("cart-item");
+                cartItemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <h3>${item.name}</h3>
+                    <p>$${item.price.toFixed(2)}</p>
+                    <button class="delete-btn" data-index="${index}">×</button>
+                `;
+                cartItemsSection.appendChild(cartItemDiv);
+                // Add price to total
+                totalPrice += item.price;
+            });
+            // Update the total price in the footer
+            totalPriceElement.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+            // Add event listeners for delete buttons
+            const deleteButtons = document.querySelectorAll(".delete-btn");
+            deleteButtons.forEach(button => {
+                button.addEventListener("click", function() {
+                    const index = parseInt(button.getAttribute("data-index"));
+                    removeItem(index);
+                });
+            });
+        }
+
+        // Function to remove an item from the cart
+        function removeItem(index) {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.splice(index, 1);  // Remove the item at the specified index
+            localStorage.setItem("cart", JSON.stringify(cart));  // Update localStorage
+            updateCartCount();  // Update cart count
+            displayCart();  // Re-display the updated cart
+        }
+
+        // Update the cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartCount = cart.length;
+            document.getElementById("cart-count").innerText = cartCount;
+        }
+
+        // Function to show delivery form
+        function showDeliveryForm() {
+            document.getElementById('delivery-form').style.display = 'block';
+        }
+
+        // Function to submit order
+        document.getElementById("delivery-form-content").addEventListener("submit", function(event) {
+            event.preventDefault();  // Prevent page reload
+            // Prepare the form data
+            const formData = {
+                name: document.getElementById("name").value,
+                address: document.getElementById("address").value,
+                phone: document.getElementById("phone").value,
+                email: document.getElementById("email").value,
+                paymentMethod: document.getElementById("payment-method").value,
+            };
+            // Show a success message
+            alert("Thank you for ordering! Your payment method: " + formData.paymentMethod);
+            // Clear localStorage to delete cart data
+            localStorage.clear();
+            // Redirect back to the homepage after submission
+            window.location.href = "index.html";
+        });
+
+        // Function to get and display the weather
+        function getWeather() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}&units=metric`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const weatherContainer = document.getElementById("weather-container");
+                            weatherContainer.innerHTML = `
+                                <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" alt="Weather Icon">
+                                <p>${data.name}</p> <!-- City name -->
+                                <p>${data.weather[0].description}</p>
+                                <p>Temperature: ${data.main.temp}°C</p>
+                                <p>Humidity: ${data.main.humidity}%</p>
+                            `;
+                        })
+                        .catch(error => {
+                            console.error("Error fetching weather data:", error);
+                            document.getElementById("weather-container").innerHTML = "<p>Error fetching weather data.</p>";
+                        });
+                });
+            } else {
+                document.getElementById("weather-container").innerHTML = "<p>Geolocation is not supported by this browser.</p>";
+            }
+        }
+
+        // Call the displayCart and getWeather functions when the page loads
+        window.onload = function() {
+            displayCart();
+            updateCartCount();
+            getWeather();
+        };
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

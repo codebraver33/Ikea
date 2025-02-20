@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walmart Supermarket</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/pngaaa.com-714543.png" alt="Walmart Logo">
+        </div>
+        <button class="toggle-btn" onclick="toggleMenu()">
+            <i class="fa fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="availableitems.html">Items</a></li>
+            <li><a href="Customer.html">Customers</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="cart-icon">
+                <a href="cart.html"><i class="fa fa-shopping-cart"></i>
+                <span id="cart-count">0</span></a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Hero Section -->
+    <header class="hero">
+        <button  onclick="scrollToWelcome()">Get Started</button>
+    </header>
+    <!-- Welcome Section -->
+    <section id="welcome">
+        <p>Welcome to the IKEA Restaurant, where great food meets comfort and style. Whether you're here to recharge after a day of shopping or simply craving a delicious meal, we offer a wide variety of dishes to suit every taste. From Swedish classics like meatballs to fresh salads and desserts, each meal is made with quality ingredients and served in a warm, welcoming atmosphere. Join us and enjoy a relaxing dining experience that's as satisfying as the furniture we create.</p>
+    </section>
+    <!-- Footer -->
+    <footer class="special-footer">
+        <div class="footer-container">
+            <div class="footer-section company-info">
+                <h3>Ikea Restaurant</h3>
+                <p>Leading the way in affordable, quality products for everyone.</p>
+                <p>Email: support@IKEA.com</p>
+                <p>Phone: +1 800-123-4567</p>
+            </div>
+            <div class="footer-section quick-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="availableitems.html">Shop Now</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section customer-support">
+                <h4>Customer Support</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Order Tracking</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section social-media">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/IKEA/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/ikeausa?igsh=MWV5azh1YjBucndkNA=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/IKEA"><i class="fab fa-twitter"></i></a>
+                    <a href="https://twitter.com/IKEAUSA"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ikea Restaurant. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
