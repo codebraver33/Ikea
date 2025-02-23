@@ -110,24 +110,24 @@
     </footer>
     <script>
         // OpenWeatherMap API key
-        const weatherApiKey = "09f1bfdf999b5ea4881df9254e5e43a6"; // Replace with your OpenWeatherMap API key
+        const weatherApiKey = "09f1bfdf999b5ea4881df9254e5e43a6"; //store the open weather api to fetch weather data
 
         // Function to display items in the cart
         function displayCart() {
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const cartItemsSection = document.getElementById("cart-items");
+            const cart = JSON.parse(localStorage.getItem("cart")) || []; //gets cart from local storage if no cart exist it create empty list
+            const cartItemsSection = document.getElementById("cart-items"); //html elements where cart items will be displayed
             const totalPriceElement = document.getElementById("total-price");
             cartItemsSection.innerHTML = "";  // Clear previous cart items
             let totalPrice = 0;
-            cart.forEach((item, index) => {
+            cart.forEach((item, index) => {  //loops through the cart items
                 const cartItemDiv = document.createElement("div");
-                cartItemDiv.classList.add("cart-item");
+                cartItemDiv.classList.add("cart-item"); //add class to the div
                 cartItemDiv.innerHTML = `
                     <img src="${item.image}" alt="${item.name}">
                     <h3>${item.name}</h3>
                     <p>$${item.price.toFixed(2)}</p>
-                    <button class="delete-btn" data-index="${index}">×</button>
-                `;
+                    <button class="delete-btn" data-index="${index}">×</button>  
+                `; // adds items image name price and delete button to the cart
                 cartItemsSection.appendChild(cartItemDiv);
                 // Add price to total
                 totalPrice += item.price;
@@ -141,12 +141,12 @@
                     const index = parseInt(button.getAttribute("data-index"));
                     removeItem(index);
                 });
-            });
+            }); // finds all delete buttons and add event listener to remove item from cart
         }
 
         // Function to remove an item from the cart
         function removeItem(index) {
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cart = JSON.parse(localStorage.getItem("cart")) || []; // Get the cart from localStorage
             cart.splice(index, 1);  // Remove the item at the specified index
             localStorage.setItem("cart", JSON.stringify(cart));  // Update localStorage
             updateCartCount();  // Update cart count
@@ -155,9 +155,9 @@
 
         // Update the cart count
         function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem("cart")) || [];
-            const cartCount = cart.length;
-            document.getElementById("cart-count").innerText = cartCount;
+            const cart = JSON.parse(localStorage.getItem("cart")) || []; // Get the cart from localStorage
+            const cartCount = cart.length; //count the number of items in the cart
+            document.getElementById("cart-count").innerText = cartCount; //update the cart count
         }
 
         // Function to show delivery form
@@ -186,12 +186,12 @@
 
         // Function to get and display the weather
         function getWeather() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
+            if (navigator.geolocation) {  //check if geolocation is supported by the browser
+                navigator.geolocation.getCurrentPosition(position => {  //get the current position
+                    const lat = position.coords.latitude; //get the latitude
+                    const lon = position.coords.longitude;  //get the longitude
                     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}&units=metric`)
-                        .then(response => response.json())
+                        .then(response => response.json()) //fetch the weather data
                         .then(data => {
                             const weatherContainer = document.getElementById("weather-container");
                             weatherContainer.innerHTML = `
@@ -201,7 +201,7 @@
                                 <p>Temperature: ${data.main.temp}°C</p>
                                 <p>Humidity: ${data.main.humidity}%</p>
                             `;
-                        })
+                        }) //display the weather data
                         .catch(error => {
                             console.error("Error fetching weather data:", error);
                             document.getElementById("weather-container").innerHTML = "<p>Error fetching weather data.</p>";

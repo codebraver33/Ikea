@@ -93,9 +93,9 @@
     <script>
         // Food API for searching food items
         const apiUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
-        // Set the default value of the search bar to "bread" when the page loads
+        // Set the default value of the search bar to "beef" when the page loads
         window.onload = function() {
-            document.getElementById("search-bar").value = "bread";
+            document.getElementById("search-bar").value = "beef";
             searchItems();  // Trigger the search when the page loads
             updateCartCount();
         };
@@ -110,9 +110,9 @@
             }
             // API call to fetch data from the external API
             fetch(`${apiUrl}${query}`)
-                .then(response => response.json())
+                .then(response => response.json()) // Parse the JSON data
                 .then(data => {
-                    if (data.meals) {
+                    if (data.meals) {   //if meal is found loop through the data and display it
                         data.meals.forEach(item => {
                             const itemDiv = document.createElement("div");
                             itemDiv.classList.add("item");
@@ -123,7 +123,7 @@
                                 <h3>${item.strMeal}</h3>
                                 <p>Price: $${price}</p>
                                 <button onclick="addToCart('${item.idMeal}', '${item.strMeal}', '${item.strMealThumb}', ${price})">Add to Cart</button>
-                            `;
+                            `; //generate random price for each item
                             itemsSection.appendChild(itemDiv);
                         });
                     } else {
@@ -132,7 +132,7 @@
                 })
                 .catch(error => {
                     console.error("Error fetching data:", error);
-                    itemsSection.innerHTML = "<p>Error fetching data. Please try again later.</p>";
+                    itemsSection.innerHTML = "<p>Error fetching data. Please try again later.</p>"; //display error message if there is an error
                 });
         }
         // Function to add item to cart
@@ -159,18 +159,18 @@
         function toggleMenu() {
             const navLinks = document.getElementById("nav-links");
             navLinks.classList.toggle("active");
-        }
+        } //show and hide the menu
 
         // Function to toggle the chat window
         function toggleChat() {
             const chatContainer = document.getElementById('chat-container');
             chatContainer.classList.toggle('active');
-        }
+        } // open and close the chat window
 
         // Function to send a message to the chatbot
         function sendMessage() {
             const input = document.getElementById('chat-input');
-            const message = input.value.trim();
+            const message = input.value.trim(); //get the message from the input field
             if (message) {
                 displayMessage('You', message);
                 input.value = '';
@@ -190,13 +190,13 @@
 
         // Function to fetch a response from the MealDB API
         function fetchChatbotResponse(message) {
-            fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${message}`)
+            fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${message}`) //use the message to search for the meal
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.json();
-                })
+                })  //check if response is successful
                 .then(data => {
                     if (data.meals) {
                         const ingredients = [];
@@ -210,11 +210,11 @@
                     } else {
                         displayMessage('Chatbot', `Sorry, I couldn't find any ingredients for ${message}.`);
                     }
-                })
+                })  //if food is found display the ingredients in the chat
                 .catch(error => {
                     console.error('Error fetching chatbot response:', error);
                     displayMessage('Chatbot', 'Sorry, something went wrong. Please try again later.');
-                });
+                }); //display error message if there is an error
         }
     </script>
 </body>

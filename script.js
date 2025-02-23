@@ -1,6 +1,6 @@
 // Toggle Navbar for Mobile
 function toggleMenu() {
-    document.getElementById("nav-links").classList.toggle("active");
+    document.getElementById("nav-links").classList.toggle("active"); //toggle for small screens
 }
 // Scroll to the Welcome Section
 function scrollToWelcome() {
