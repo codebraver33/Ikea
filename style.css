@@ -63,9 +63,9 @@ body {
     font-size: 12px;
 }
 /* Hero Section */
+/* Hero Section */
 .hero {
     display: flex;
-   
     justify-content: center;
     align-items: center;
     background: url('images/backres.jpg') no-repeat center center;
@@ -73,6 +73,21 @@ body {
     height: 100vh;
     text-align: center;
     position: relative;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        background: url('images/backres.jpg') no-repeat center center;
+        background-size: contain;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        background: url('images/backres.jpg') no-repeat center center;
+        background-size: contain;
+    }
 }
 .hero button {
     background-color: #FFC220;
